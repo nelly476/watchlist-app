@@ -4,9 +4,14 @@ html {
   padding: 0;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   background-color: rgba(250, 235, 215, 0.396);
+}
+
+* {
+  margin: 0;
 }
 
 img {
@@ -18,12 +23,13 @@ img {
   background-color: white;
 }
 
-button:hover {
+button:hover,
+.fa-circle-plus:hover,
+.fa-circle-minus:hover {
   cursor: pointer;
 }
 
 .content {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,6 +44,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 2em;
+  position: relative;
 }
 
 h1 {
@@ -56,21 +63,24 @@ header p {
   padding: 0.3em;
   column-gap: 0.4em;
   background-color: white;
+  width: 80%;
 }
 
 .search-section {
   display: flex;
-  border: 2px solid grey;
+  border: 1px solid grey;
   border-radius: 6px;
   color: grey;
   position: absolute;
-  top: -0.7em;
-  height: fit-content;
-  padding: 0;
+  bottom: -0.7em;
+  width: 80%;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
 }
 
 .search-bar {
-  padding: 0em 6em 0em 0;
+  /* padding: 0em 6em 0em 0; */
   border: none;
   font-size: 1.2rem;
 }
@@ -83,8 +93,9 @@ input[type="text"]:focus {
 .search-section button {
   border: none;
   border-left: 1px solid grey;
-  padding: 0 1.5em;
+  /* padding: 0 1em; */
   font-size: 1.2rem;
+  width: 20%;
 }
 
 .fa-magnifying-glass {
@@ -98,4 +109,50 @@ input[type="text"]:focus {
   color: grey;
   margin-top: 40%;
   font-weight: bold;
+}
+
+/* film description */
+
+.film-description-section,
+.film-info,
+.film-title-section,
+.rating-info,
+.watchlist-add-section {
+  display: flex;
+  align-items: center;
+}
+
+.film-description-section {
+  margin-top: 3em;
+  padding: 0 2.3em;
+}
+
+.film-poster {
+  width: 20%;
+  object-fit: contain;
+}
+
+.film-title-section,
+.film-description-section {
+  column-gap: 0.8em;
+  margin-bottom: 0.5em;
+}
+
+.rating-info,
+.watchlist-add-section {
+  column-gap: 0.2em;
+}
+
+.fa-star {
+  color: gold;
+}
+
+.film-info {
+  column-gap: 1.7em;
+  margin-bottom: 1.6em;
+}
+
+.film-info p:not(:last-child),
+.plot-section {
+  color: #464242;
 }
