@@ -1,5 +1,9 @@
+import Film from "./Film.js";
+
 const content = document.getElementById("content");
 let descriptionHtml = "";
+let myFilms = [];
+let filmsFromLocalStorage = JSON.parse(localStorage.getItem("allFilms"));
 
 document.getElementById("search-btn").addEventListener("click", () => {
   const movieTitle = document.getElementById("search-bar-input").value;
@@ -7,54 +11,36 @@ document.getElementById("search-btn").addEventListener("click", () => {
   fetch(`http://www.omdbapi.com/?s=${movieTitle}&apikey=f6f40030`)
     .then((res) => res.json())
     .then((data) => {
-      for (let film of data.Search) {
-        fetch(`http://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
-          .then((res) => res.json())
-          .then((info) => {
-            descriptionHtml += `
-                    <div class="film-description-section">
-              <img src=${info.Poster} alt="Film poster" class="film-poster" />
-              <div class="film-info-section">
-  
-                <div class="film-title-section">
-  
-                  <h3>${info.Title}</h3>
-                  <div class="rating-info">
-                    <i class="fa-sharp fa-solid fa-star"></i>
-                    <p>${info.imdbRating}</p>
-                  </div>
-  
-                </div>
-  
-                <div class="film-info">
-                  <p>${info.Runtime}</p>
-                  <p>${info.Genre}</p>
-                  <div class="watchlist-add-section">
-                  <div>
-                    <i class="fa-solid fa-circle-plus add-icon" data-id=${info.imdbID}></i>
-                  </div>
-                    <p>Watchlist</p>
-                  </div>
-                </div>  
-                  <div class="plot-section">
-                  <p class="film-description">${info.Plot}</p>
-              
-              </div>
-              </div>
-              </div>`;
+      if (data.Response === "False") {
+        content.innerHTML = `
+              <div class="explore-section" id="explore-section">
 
-            content.innerHTML = descriptionHtml;
-            let addIcons = document.getElementsByClassName("add-icon");
+        <p>Unable to find what you're looking for.</p>
+        <p>Please try another search</p>
+      </div>
+              `;
+      } else {
+        for (let film of data.Search) {
+          fetch(`http://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
+            .then((res) => res.json())
+            .then((info) => {
+              let film = new Film(info);
+              descriptionHtml += film.getFilmDescription();
 
-            for (let icon of addIcons) {
-              icon.addEventListener("click", (e) => {
-                icon.classList.toggle("fa-circle-plus");
-                // icon.classList.toggle("fa-circle-minus");
-                localStorage.setItem("newFilm");
-                console.log(e.target.dataset.id);
-              });
-            }
-          });
+              content.innerHTML = descriptionHtml;
+              let addIcons = document.getElementsByClassName("add-icon");
+              for (let icon of addIcons) {
+                icon.addEventListener("click", (e) => {
+                  icon.classList.remove("fa-circle-plus");
+                  icon.classList.add("fa-circle-minus");
+                  myFilms.push(e.target.dataset.id);
+                  localStorage.setItem("allFilms", JSON.stringify(myFilms));
+                });
+              }
+            });
+        }
       }
     });
 });
+
+export default filmsFromLocalStorage;
