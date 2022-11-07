@@ -11,7 +11,6 @@ document.getElementById("search-btn").addEventListener("click", () => {
         fetch(`http://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
           .then((res) => res.json())
           .then((info) => {
-            console.log(info);
             descriptionHtml += `
                     <div class="film-description-section">
               <img src=${info.Poster} alt="Film poster" class="film-poster" />
@@ -32,7 +31,7 @@ document.getElementById("search-btn").addEventListener("click", () => {
                   <p>${info.Genre}</p>
                   <div class="watchlist-add-section">
                   <div>
-                    <i class="fa-solid fa-circle-plus" id="add-icon"></i>
+                    <i class="fa-solid fa-circle-plus add-icon" data-id=${info.imdbID}></i>
                   </div>
                     <p>Watchlist</p>
                   </div>
@@ -43,13 +42,18 @@ document.getElementById("search-btn").addEventListener("click", () => {
               </div>
               </div>
               </div>`;
-            content.innerHTML = descriptionHtml;
-            const addIcon = document.getElementById("add-icon");
 
-            addIcon.addEventListener("click", () => {
-              addIcon.classList.toggle("fa-circle-plus");
-              addIcon.classList.toggle("fa-circle-minus");
-            });
+            content.innerHTML = descriptionHtml;
+            let addIcons = document.getElementsByClassName("add-icon");
+
+            for (let icon of addIcons) {
+              icon.addEventListener("click", (e) => {
+                icon.classList.toggle("fa-circle-plus");
+                // icon.classList.toggle("fa-circle-minus");
+                localStorage.setItem("newFilm");
+                console.log(e.target.dataset.id);
+              });
+            }
           });
       }
     });
