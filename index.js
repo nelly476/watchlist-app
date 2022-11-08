@@ -37,11 +37,9 @@ document.getElementById("search-btn").addEventListener("click", () => {
 
               content.innerHTML = descriptionHtml;
 
-              let addIcons = document.getElementsByClassName("add-icon");
-              let removeIcons =
-                document.getElementsByClassName("fa-circle-minus");
+              const addIcons = document.getElementsByClassName("add-icon");
 
-              // add a movie to localStorage
+              // add and delete a movie to and from localStorage
               for (let icon of addIcons) {
                 icon.addEventListener("click", (e) => {
                   if (icon.classList.contains("fa-circle-plus")) {
