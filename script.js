@@ -20,7 +20,6 @@ function render() {
             let index = movieIds.indexOf(e.target.dataset.id);
             movieIds.splice(index, 1);
             localStorage.setItem("allFilms", JSON.stringify(movieIds));
-            console.log(movieIds);
             descriptionHtml = "";
             check();
           });
@@ -33,9 +32,8 @@ function check() {
   if (movieIds.length === 0) {
     content.innerHTML = `
           <div class="explore-section" id="explore-section">
-      
-      <p>Unable to find what you're looking for.</p>
-      <p>Please try another search</p>
+      <p class="margin-bottom">Your watchlist is looking a little empty...</p>
+      <a id="black" href="./index.html"><i class="fa-solid fa-circle-plus"></i> Let's add some movies!</a>
       </div>
           `;
   } else {

@@ -42,11 +42,13 @@ document.getElementById("search-btn").addEventListener("click", () => {
               // add and delete a movie to and from localStorage
               for (let icon of addIcons) {
                 icon.addEventListener("click", (e) => {
+                  // add
                   if (icon.classList.contains("fa-circle-plus")) {
                     icon.classList.remove("fa-circle-plus");
                     icon.classList.add("fa-circle-minus");
                     myFilms.push(e.target.dataset.id);
                     localStorage.setItem("allFilms", JSON.stringify(myFilms));
+                    // delete
                   } else if (icon.classList.contains("fa-circle-minus")) {
                     icon.classList.remove("fa-circle-minus");
                     icon.classList.add("fa-circle-plus");
