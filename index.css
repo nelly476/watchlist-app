@@ -174,3 +174,9 @@ input[type="text"]:focus {
 .plot-section {
   color: #464242;
 }
+
+@media (max-width: 650px) {
+  .container {
+    width: 100%;
+  }
+}

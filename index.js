@@ -12,7 +12,7 @@ if (filmsFromLocalStorage) {
 document.getElementById("search-btn").addEventListener("click", () => {
   const movieTitle = document.getElementById("search-bar-input").value;
 
-  fetch(`http://www.omdbapi.com/?s=${movieTitle}&apikey=f6f40030`)
+  fetch(`https://www.omdbapi.com/?s=${movieTitle}&apikey=f6f40030`)
     .then((res) => res.json())
     .then((data) => {
       if (data.Response === "False") {
@@ -25,7 +25,7 @@ document.getElementById("search-btn").addEventListener("click", () => {
               `;
       } else {
         for (let film of data.Search) {
-          fetch(`http://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
+          fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
             .then((res) => res.json())
             .then((info) => {
               let film = new Film(info);

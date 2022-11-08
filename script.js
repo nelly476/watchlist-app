@@ -7,7 +7,7 @@ const addIcons = document.getElementsByClassName("add-icon");
 
 function render() {
   for (let id of movieIds) {
-    fetch(`http://www.omdbapi.com/?i=${id}&apikey=f6f40030`)
+    fetch(`https://www.omdbapi.com/?i=${id}&apikey=f6f40030`)
       .then((res) => res.json())
       .then((info) => {
         let film = new Film(info);
