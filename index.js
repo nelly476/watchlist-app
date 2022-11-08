@@ -5,6 +5,10 @@ let descriptionHtml = "";
 let myFilms = [];
 let filmsFromLocalStorage = JSON.parse(localStorage.getItem("allFilms"));
 
+if (filmsFromLocalStorage) {
+  myFilms = filmsFromLocalStorage;
+}
+
 document.getElementById("search-btn").addEventListener("click", () => {
   const movieTitle = document.getElementById("search-bar-input").value;
 
@@ -25,16 +29,34 @@ document.getElementById("search-btn").addEventListener("click", () => {
             .then((res) => res.json())
             .then((info) => {
               let film = new Film(info);
-              descriptionHtml += film.getFilmDescription();
+              if (myFilms.includes(film.imdbID)) {
+                descriptionHtml += film.changeAddIcon();
+              } else {
+                descriptionHtml += film.getFilmDescription();
+              }
 
               content.innerHTML = descriptionHtml;
+
               let addIcons = document.getElementsByClassName("add-icon");
+              let removeIcons =
+                document.getElementsByClassName("fa-circle-minus");
+
+              // add a movie to localStorage
               for (let icon of addIcons) {
                 icon.addEventListener("click", (e) => {
-                  icon.classList.remove("fa-circle-plus");
-                  icon.classList.add("fa-circle-minus");
-                  myFilms.push(e.target.dataset.id);
-                  localStorage.setItem("allFilms", JSON.stringify(myFilms));
+                  if (icon.classList.contains("fa-circle-plus")) {
+                    icon.classList.remove("fa-circle-plus");
+                    icon.classList.add("fa-circle-minus");
+                    myFilms.push(e.target.dataset.id);
+                    localStorage.setItem("allFilms", JSON.stringify(myFilms));
+                  } else if (icon.classList.contains("fa-circle-minus")) {
+                    icon.classList.remove("fa-circle-minus");
+                    icon.classList.add("fa-circle-plus");
+                    let index = myFilms.indexOf(e.target.dataset.id);
+                    myFilms.splice(index, 1);
+                    localStorage.setItem("allFilms", JSON.stringify(myFilms));
+                  }
+                  console.log(myFilms);
                 });
               }
             });
@@ -42,5 +64,3 @@ document.getElementById("search-btn").addEventListener("click", () => {
       }
     });
 });
-
-export default filmsFromLocalStorage;
