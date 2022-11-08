@@ -24,6 +24,7 @@ document.getElementById("search-btn").addEventListener("click", () => {
       </div>
               `;
       } else {
+        descriptionHtml = "";
         for (let film of data.Search) {
           fetch(`https://www.omdbapi.com/?i=${film.imdbID}&apikey=f6f40030`)
             .then((res) => res.json())
@@ -34,7 +35,6 @@ document.getElementById("search-btn").addEventListener("click", () => {
               } else {
                 descriptionHtml += film.getFilmDescription();
               }
-
               content.innerHTML = descriptionHtml;
 
               const addIcons = document.getElementsByClassName("add-icon");
@@ -56,7 +56,6 @@ document.getElementById("search-btn").addEventListener("click", () => {
                     myFilms.splice(index, 1);
                     localStorage.setItem("allFilms", JSON.stringify(myFilms));
                   }
-                  console.log(myFilms);
                 });
               }
             });
